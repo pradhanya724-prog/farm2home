@@ -1,0 +1,32 @@
+{% extends "base.html" %}{% block title %}Fresh from farms{% endblock %}{% block body_class %}page-home{% endblock %}
+{% block content %}
+<section class="hero">
+ <div class="hero-shade"></div><div class="container hero-content">
+  <div class="eyebrow"><span></span> A smarter way to buy local</div>
+  <h1>Good food has<br><em>a story.</em></h1>
+  <p class="hero-copy">Meet the farmers behind your food. Check freshness, follow every batch and support fair farm prices.</p>
+  <div class="d-flex flex-wrap gap-3"><a class="btn btn-lime btn-lg" href="{{ url_for('products') }}">Explore fresh produce <span>↗</span></a><a class="btn btn-outline-light btn-lg" href="{{ url_for('register') }}">Join the community</a></div>
+  <div class="hero-proof"><div><strong>01</strong><span>Know your farmer</span></div><div><strong>02</strong><span>Track your harvest</span></div><div><strong>03</strong><span>Choose freshness</span></div></div>
+ </div>
+ <div class="hero-note">FROM SOIL TO SOUL <span>✳</span></div>
+</section>
+<section class="container feature-strip">
+ <div class="feature-intro"><span class="eyebrow dark">THE FARM2HOME DIFFERENCE</span><h2>More than a marketplace.</h2><p>A transparent journey from the farm gate to your kitchen.</p></div>
+ <div class="mini-feature"><div class="mini-icon">◉</div><h5>Freshness score</h5><p>Compare harvest age and handling details.</p></div>
+ <div class="mini-feature"><div class="mini-icon">⌁</div><h5>Batch traceability</h5><p>Scan a QR code to discover the origin.</p></div>
+ <div class="mini-feature"><div class="mini-icon">₹</div><h5>Fairer prices</h5><p>See price context before you buy.</p></div>
+</section>
+<section class="container section-pad">
+ <div class="section-heading"><div><span class="eyebrow dark">JUST HARVESTED</span><h2>Fresh picks from our farms</h2></div><a class="text-link" href="{{ url_for('products') }}">View all produce ↗</a></div>
+ <div class="row g-4">
+ {% for p in featured %}
+ <div class="col-6 col-lg-3"><a class="product-card" href="{{ url_for('product_detail', product_id=p.id) }}">
+  <div class="product-photo">{% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.name }}">{% else %}<div class="photo-placeholder">🌿</div>{% endif %}<span class="fresh-pill">{{ p.freshness }} freshness</span></div>
+  <div class="product-info"><small>{{ p.category }}</small><h5>{{ p.name }}</h5><div class="d-flex justify-content-between"><strong>₹{{ '%.2f'|format(p.buyer_price) }}/{{ p.unit }}</strong><span class="muted">{{ p.quantity }} {{ p.unit }}</span></div></div>
+ </a></div>{% else %}
+ <div class="col-12"><div class="empty-state">No produce listed yet. Farmer listings will appear here.</div></div>
+ {% endfor %}
+ </div>
+</section>
+<section class="impact-banner"><div class="container impact-inner"><div><span class="eyebrow">A BETTER HARVEST JOURNEY</span><h2>Every purchase can<br>make a difference.</h2></div><p>Help farmers reach buyers directly, discover seasonal produce and give surplus harvest a second chance.</p><a href="{{ url_for('products') }}" class="btn btn-lime">Discover the marketplace ↗</a></div></section>
+{% endblock %}
